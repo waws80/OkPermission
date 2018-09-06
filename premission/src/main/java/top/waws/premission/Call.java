@@ -1,8 +1,9 @@
 package top.waws.premission;
 
-import android.app.Activity;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 
 import java.util.List;
 
@@ -15,11 +16,11 @@ import java.util.List;
 
     private List<String> mPermissions;
     private int mRequestCode;
-    private Activity mActivity;
+    private AppCompatActivity mActivity;
     private PermissionCallBack callBack;
     private boolean mustAgree;
 
-    Call(List<String> permissions, int requestCode, Activity activity,
+    Call(List<String> permissions, int requestCode, AppCompatActivity activity,
          PermissionCallBack callBack, IPermissionIntecepter intecepter, boolean mustAgree){
         this.mPermissions = permissions;
         this.mRequestCode = requestCode;
@@ -43,7 +44,7 @@ import java.util.List;
         fragment.setCallBack(this.callBack);
         fragment.setIntecepter(intecepter);
         fragment.setMustAgree(this.mustAgree);
-        FragmentManager manager = this.mActivity.getFragmentManager();
+        FragmentManager manager = this.mActivity.getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.add(fragment,"PermissionFragment").commit();
     }

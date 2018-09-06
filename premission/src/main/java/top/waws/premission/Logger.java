@@ -9,7 +9,7 @@ import android.util.Log;
  *         Desc
  */
 
-final class Logger {
+public final class Logger {
 
     private static boolean DEBUG = false;
 
@@ -20,7 +20,7 @@ final class Logger {
         DEBUG = debug;
     }
 
-    static void d(String msg){
+    public static void d(String msg){
         if (DEBUG){
             Log.d("Permission",msg);
         }

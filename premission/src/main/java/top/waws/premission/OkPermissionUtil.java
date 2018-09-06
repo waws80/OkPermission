@@ -1,12 +1,10 @@
 package top.waws.premission;
 
-import android.app.Activity;
+import android.support.v7.app.AppCompatActivity;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.annotation.NonNull;
 
 /**
  * 权限申请封装类
@@ -34,8 +32,9 @@ public final class OkPermissionUtil {
 
     private List<String> mPermissions = new ArrayList<>();
 
-    private WeakReference<Activity> mActivityWRF;
+    private WeakReference<AppCompatActivity> mActivityWRF;
     private boolean mustAgree = false; //是否必须统一
+
 
 
     private OkPermissionUtil(){
@@ -53,7 +52,7 @@ public final class OkPermissionUtil {
      * @return Permission
      */
     public static OkPermissionUtil getInstance(){
-        return getInstance(false);
+        return Builder.PERMISSION;
     }
 
     /**
@@ -61,10 +60,10 @@ public final class OkPermissionUtil {
      * @param debug 是否开启调试模式
      * @return Permission
      */
-    public static OkPermissionUtil getInstance(boolean debug) {
+    public static void init(boolean debug) {
         DEBUG = debug;
         Logger.init(DEBUG);
-        return Builder.PERMISSION;
+
     }
 
     /**
@@ -84,8 +83,8 @@ public final class OkPermissionUtil {
      * @return
      */
     public OkPermissionUtil build(Object activity){
-        if (activity instanceof Activity){
-            this.mActivityWRF = new WeakReference<>((Activity)activity);
+        if (activity instanceof AppCompatActivity){
+            this.mActivityWRF = new WeakReference<>((AppCompatActivity) activity);
         }
         return this;
     }
