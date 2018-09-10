@@ -83,7 +83,7 @@ public class AspectTool {
             return;
         }
 
-        OkPermissionUtil okPermissionUtil = OkPermissionUtil.getInstance().build(parent)
+        OkPermissionUtil okPermissionUtil = OkPermissionUtil.getInstance().build(activity)
                 .request(Arrays.asList(requestPermission.value()));
         if (requestPermission.mustAgree()){
             okPermissionUtil.mustAgree();
