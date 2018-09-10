@@ -1,5 +1,6 @@
 package top.waws.premission.aspect;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -48,35 +49,59 @@ public class AspectTool {
         Object parent = point.getTarget();
         String methodName = point.getSignature().getName();
         Method method = parent.getClass().getMethod(methodName,((MethodSignature)(point.getSignature())).getParameterTypes());
+        //防止为私有的方法
+        method.setAccessible(true);
         if (!method.getReturnType().equals(void.class)){
             throw new IllegalArgumentException("方法的返回值只能是 void");
         }
         RequestPermission requestPermission = method.getAnnotation(RequestPermission.class);
-        if (parent instanceof Context || parent instanceof Fragment){
-            OkPermissionUtil okPermissionUtil = OkPermissionUtil.getInstance().build(parent)
-                    .request(Arrays.asList(requestPermission.value()));
-            if (requestPermission.mustAgree()){
-                okPermissionUtil.mustAgree();
-            }
-            okPermissionUtil.execute(new PermissionCallBack() {
-                @Override
-                public void next(int code) {
-                    if (code == OkPermissionUtil.OK){
-                        try {
-                            point.proceed();
-                        } catch (Throwable throwable) {
-                            throwable.printStackTrace();
-                        }
+        Activity activity = null;
+        if (parent instanceof Activity){
+            activity = (Activity) parent;
+        }
+        if (activity == null && parent instanceof Fragment){
+            activity = ((Fragment) parent).getActivity();
+        }
+        if (activity == null && parent instanceof android.app.Fragment){
+            activity = ((android.app.Fragment) parent).getActivity();
+        }
+        if (activity == null){
+            for (Object arg : point.getArgs()) {
+                if (arg instanceof Activity || arg instanceof Fragment || arg instanceof android.app.Fragment){
+                    if (arg instanceof Activity){
+                        activity = (Activity) arg;
+                    }else if (arg instanceof Fragment){
+                        activity = ((Fragment) arg).getActivity();
                     }else {
-                        Logger.d("拒绝申请本次权限");
+                        activity = ((android.app.Fragment) arg).getActivity();
                     }
                 }
-            });
-
-
-        }else {
-            Logger.d("当前注解只能用在activity 和 fragment 上");
+            }
         }
+        if (activity == null){
+            Logger.d("当前注解只能用在activity 和 fragment 上 或者参数中有 activity 或 fragment");
+            return;
+        }
+
+        OkPermissionUtil okPermissionUtil = OkPermissionUtil.getInstance().build(parent)
+                .request(Arrays.asList(requestPermission.value()));
+        if (requestPermission.mustAgree()){
+            okPermissionUtil.mustAgree();
+        }
+        okPermissionUtil.execute(new PermissionCallBack() {
+            @Override
+            public void next(int code) {
+                if (code == OkPermissionUtil.OK){
+                    try {
+                        point.proceed();
+                    } catch (Throwable throwable) {
+                        throwable.printStackTrace();
+                    }
+                }else {
+                    Logger.d("拒绝申请本次权限");
+                }
+            }
+        });
     }
 
 
