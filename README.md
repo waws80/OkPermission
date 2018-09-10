@@ -1,6 +1,9 @@
 # OkPermission
 权限申请
 
+[![](https://jitpack.io/v/waws80/OkPermission.svg)](https://jitpack.io/#waws80/OkPermission)
+
+
 aspectj使用 添加 第一步 和 第二步 然后添加
 
 	api 'org.aspectj:aspectjrt:1.9.1'
@@ -25,7 +28,7 @@ aspectj使用 添加 第一步 和 第二步 然后添加
 ### 3：base module的gradle中添加
 
 	dependencies {
-	        implementation 'com.github.waws80:OkPermission:v0.1.0'
+	        implementation 'com.github.waws80:OkPermission:0.2.0'
 	}
 	
 ### 4：使用例子：
@@ -45,7 +48,7 @@ aspectj使用 添加 第一步 和 第二步 然后添加
     	}
 	
 	
-	//注解使用方式
+	//注解使用方式 当前注解只能用在 activity 和fragment 或者 参数中 包含 activity 或 fragment
 	@RequestPermission(value = {Manifest.permission.WRITE_EXTERNAL_STORAGE}, mustAgree = true)
    	public void click(View view){
         	Log.d(TAG, "click: 我是点击事件内部的方法");
