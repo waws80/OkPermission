@@ -1,6 +1,9 @@
 # OkPermission
 权限申请
 
+[![](https://jitpack.io/v/waws80/OkPermission.svg)](https://jitpack.io/#waws80/OkPermission)
+
+
 aspectj使用 添加 第一步 和 第二步 然后添加
 
 	api 'org.aspectj:aspectjrt:1.9.1'
@@ -25,7 +28,7 @@ aspectj使用 添加 第一步 和 第二步 然后添加
 ### 3：base module的gradle中添加
 
 	dependencies {
-	        implementation 'com.github.waws80:OkPermission:v0.1.0'
+	        implementation 'com.github.waws80:OkPermission:0.2.0'
 	}
 	
 ### 4：使用例子：
