@@ -45,7 +45,7 @@ aspectj使用 添加 第一步 和 第二步 然后添加
     	}
 	
 	
-	//注解使用方式
+	//注解使用方式 当前注解只能用在 activity 和fragment 或者 参数中 包含 activity 或 fragment
 	@RequestPermission(value = {Manifest.permission.WRITE_EXTERNAL_STORAGE}, mustAgree = true)
    	public void click(View view){
         	Log.d(TAG, "click: 我是点击事件内部的方法");
