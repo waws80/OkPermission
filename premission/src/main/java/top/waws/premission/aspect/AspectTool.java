@@ -48,7 +48,8 @@ public class AspectTool {
     public void methodAround(final ProceedingJoinPoint point) throws Throwable {
         Object parent = point.getTarget();
         String methodName = point.getSignature().getName();
-        Method method = parent.getClass().getMethod(methodName,((MethodSignature)(point.getSignature())).getParameterTypes());
+        Class [] clazzs = ((MethodSignature)(point.getSignature())).getParameterTypes();
+        Method method = parent.getClass().getDeclaredMethod(methodName,clazzs);
         //防止为私有的方法
         method.setAccessible(true);
         if (!method.getReturnType().equals(void.class)){
