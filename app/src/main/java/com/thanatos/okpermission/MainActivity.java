@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         OkPermissionUtil.init(true);
     }
 
-    @RequestPermission(value = {Manifest.permission.WRITE_EXTERNAL_STORAGE})
+    //@RequestPermission(value = {Manifest.permission.WRITE_EXTERNAL_STORAGE})
     public void click(View view){
 //        OkPermissionUtil.getInstance().build(this)
 //                .mustAgree()
@@ -33,7 +33,13 @@ public class MainActivity extends AppCompatActivity {
 //                    public void next(int code) {
 //                    }
 //                });
+        requestPermission();
         Log.d(TAG, "click: 我是点击事件内部的方法");
+    }
+
+    @RequestPermission(value = {Manifest.permission.WRITE_EXTERNAL_STORAGE})
+    private void requestPermission() {
+
     }
 
 }
