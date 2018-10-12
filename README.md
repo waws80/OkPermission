@@ -28,7 +28,7 @@ aspectj使用 添加 第一步 和 第二步 然后添加
 ### 3：base module的gradle中添加
 
 	dependencies {
-	        implementation 'com.github.waws80:OkPermission:0.2.1'
+	        implementation 'com.github.waws80:OkPermission:1.0.0'
 	}
 	
 ### 4：使用例子：
